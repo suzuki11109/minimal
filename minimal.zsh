@@ -1,11 +1,12 @@
 # enable/disable switches
 MINIMAL_PROMPT="${MINIMAL_PROMPT:-yes}"
-MINIMAL_RPROMPT="${MINIMAL_RPROMPT:-yes}"
-MINIMAL_MAGIC_ENTER="${MINIMAL_MAGIC_ENTER:-yes}"
+MINIMAL_RPROMPT="${MINIMAL_RPROMPT:-no}"
+MINIMAL_MAGIC_ENTER="${MINIMAL_MAGIC_ENTER:-no}"
+MINIMAL_CHECK_GIT_STATUS="${MINIMAL_CHECK_GIT_STATUS:-no}"
 
 # customization parameters
 MINIMAL_OK_COLOR="${MINIMAL_OK_COLOR:-2}"
-MINIMAL_USER_CHAR="${MINIMAL_USER_CHAR:-λ}"
+MINIMAL_USER_CHAR="${MINIMAL_USER_CHAR:-$}"
 MINIMAL_INSERT_CHAR="${MINIMAL_INSERT_CHAR:-›}"
 MINIMAL_NORMAL_CHAR="${MINIMAL_NORMAL_CHAR:-·}"
 
@@ -32,7 +33,9 @@ function minimal_git {
   local bname="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
 
   if [ -n "$bname" ]; then
-    [ -n "$(git status --porcelain 2> /dev/null)" ] && statc="%{\e[0;31m%}"
+    if [ "$MINIMAL_CHECK_GIT_STATUS" = "yes" ]; then
+      [ -n "$(git status --porcelain 2> /dev/null)" ] && statc="%{\e[0;31m%}"
+    fi
     echo " $statc$bname%{\e[0m%}"
   fi
 }
@@ -63,7 +66,11 @@ function minimal_lprompt {
   local viins="$MINIMAL_INSERT_CHAR"
   [ "$KEYMAP" = 'vicmd' ] && viins="$MINIMAL_NORMAL_CHAR"
 
-  echo "$_venv$user_status%{\e[0m%} $viins"
+  local _prompt="$_venv$user_status%{\e[0m%}"
+  if [ "$MINIMAL_RPROMPT" = "no" ]; then
+    _prompt="$_prompt $(minimal_path)$(minimal_git)"
+  fi
+  echo "$_prompt $viins"
 }
 
 function minimal_ps2 {
