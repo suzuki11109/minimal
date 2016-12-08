@@ -20,9 +20,10 @@ Otherwise, you can always clone the repo and source `minimal.zsh`.
 # Configuration
 This theme can be customized before sourcing through variables:
 
-- `MINIMAL_PROMPT`: enables prompt customization (default: active)
-- `MINIMAL_RPROMPT`: enables right prompt (default: active)
-- `MINIMAL_MAGIC_ENTER`: enables magic enter (default: active)
+- `MINIMAL_PROMPT`: enables prompt customization (default: yes)
+- `MINIMAL_RPROMPT`: enables right prompt (default: no)
+- `MINIMAL_MAGIC_ENTER`: enables magic enter (default: no)
+- `MINIMAL_CHECK_GIT_STATUS`: overrrides checking git status (set it 'no' to make it faster) (default: no)
 - `MINIMAL_USER_CHAR`: overrides normal user character (default: `λ`)
 - `MINIMAL_INSERT_CHAR`: overrides insert mode character (default: `›`)
 - `MINIMAL_NORMAL_CHAR`: overrrides normal mode character (default: `·`)
@@ -42,14 +43,14 @@ asd λ ›                                                 Workspace/sample mast
 ```
 On the left:
 
-- `asd` is the `basename` of python's virtualenv currently in use. It won't be 
+- `asd` is the `basename` of python's virtualenv currently in use. It won't be
 shown if not in use.
 - `λ` is shown if you are a normal user. When root, a classic `#` will be shown
 instead.
-- `λ` will be green if the last command exited successfully, otherwise will be 
+- `λ` will be green if the last command exited successfully, otherwise will be
 red.
 - `λ` will be underlined if you have jobs in background.
-- `›` will be show if you are in insert (default) mode. If using vimode, `·` 
+- `›` will be show if you are in insert (default) mode. If using vimode, `·`
 is shown when in normal mode.
 
 On the right:
