@@ -49,7 +49,7 @@ function minimal_path {
 
   for i in {1..${#cwd}}; do
     pi="$cwd[$i]"
-    [ "${#pi}" -gt 10 ] && cwd[$i]="${pi:0:4}$w..$_greyp${pi: -4}"
+    [ "${#pi}" -gt 16 ] && cwd[$i]="${pi:0:7}$w..$_greyp${pi: -7}"
   done
 
   echo "$_greyp${(j:/:)cwd//\//$w/$_greyp}$w"
